@@ -1,0 +1,13 @@
+<div class="conatiner ml-5">
+  <h2>add a new recipe</h2>
+  <%= simple_form_for @recipe do |f| %>
+    <%= f.input :name %>
+    <%= f.label "Cooking or baking?" %>
+    <%= f.select :area, options_for_select(Recipe.areas.map { |key, value| [key.humanize, key] }), {prompt: "Select area (cooking or baking)..."}, class: "form-control" %>
+    <br>
+    <%= f.label "already tried?" %>
+    <%= f.select :status, options_for_select(Recipe.statuses.map { |key, value| [key.humanize, key] }), {prompt: "Select status..."}, class: "form-control" %>
+    <%= f.input :prep_time %>
+    <%= f.submit %>
+  <% end %>
+</div>

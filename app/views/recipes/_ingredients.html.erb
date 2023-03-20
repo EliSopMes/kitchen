@@ -1,0 +1,50 @@
+<h5>Ingredients:</h5>
+<ul>
+  <% @recipe.ingredients.each do |ingredient| %>
+    <% p = "" %>
+    <% case ingredient.scale %>
+    <% when "grams" %>
+      <% p = "g" %>
+    <% when "milliliter" %>
+      <% p = "ml" %>
+    <% when "number" %>
+      <% p = "" %>
+    <% when "teaspoon" %>
+      <% p = " tsp" %>
+    <% when "tablespoon" %>
+      <% p = " tbsp" %>
+    <% when "pinch" %>
+      <% p = " pinch" %>
+    <% end %>
+    <li><%= ingredient.amount%><%=p%> <%=ingredient.title%></li>
+  <% end %>
+</ul>
+<h5>Oven/heat stuff</h5>
+<p><%= @recipe.oven_degrees %> degrees for <%= @recipe.baking_time %> minutes</p>
+<%= simple_form_for [@recipe, @ingredient] do |f|  %>
+  <%= f.label "ingredient" %>
+  <%= f.input :title, label: false %>
+  <%= f.input :amount %>
+  <%= f.label "scale" %>
+  <%= f.select :scale, options_for_select(Ingredient.scales.map { |key, value| [key.humanize, key] }), {prompt: "Which scale..."}, class: "form-control" %>
+  <br>
+  <%= f.submit "add ingredient"%>
+<% end %>
+<br>
+<br>
+<% if @recipe.area == "baking" %>
+  <%= simple_form_for @recipe do |f|  %>
+    <%= f.input :baking_time %>
+    <%= f.input :oven_degrees %>
+    <br>
+    <%= f.submit %>
+  <% end %>
+<% else %>
+  <%= simple_form_for @recipe do |f|  %>
+    <%= f.input :heat %>
+    <br>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+<br>
+<br>

@@ -1,0 +1,11 @@
+<h3><%= @recipe.name %></h3>
+<h5><%= @recipe.area %> recipe</h5>
+<h5>prep time: around <%= @recipe.prep_time %> minutes</h5>
+<br>
+<% if @recipe.status == 0 %>
+  <p>tried this one already?</p>
+  <%= link_to "yes, tried it", recipe_tried_path(@recipe) %>
+<% else %>
+  <p>you already tried this one, do you want to upload a picture or add a comment?</p>
+<% end %>
+<%= render "ingredients" %>
